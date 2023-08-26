@@ -1,0 +1,19 @@
+{
+  "name": "linkin-park-scrape",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch index.ts",
+    "test": "npx playwright test --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.37.1",
+    "@types/node": "^20.5.3",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  }
+}
