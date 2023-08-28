@@ -33,21 +33,30 @@ test("get the damn title", async ({ page }) => {
   //   el.remove();
   // });
 
-  const songs = [
-    "Foreword", "Don't Stay", "Somewhere I Belong", "Lying from You",
-    "Hit the Floor", "Easier to Run", "Faint", "Figure.09", "Breaking the Habit",
-    "From the Inside", "Nobody's Listening", "Session", "Numb"
-  ];
 
-  for (let i = 0; i < songs.length; i++) {
-    await page.$eval(".songs-list-row", (el, songsName) => {
-      if (el.textContent?.includes(songsName)) {
-        el.remove();
+  // for (let i = 0; i < songs.length; i++) {
+  //   await page.$eval(".songs-list-row", (el, songsName) => {
+  //     if (el.textContent?.includes(songsName)) {
+  //       el.remove();
+  //     }
+  //   }, songs[i])
+  // }
+
+  const foo = await page.locator(".songs-list-row__song-name").evaluateAll((elx) => {
+    const songs = new Set<string>([
+      "Foreword", "Don't Stay", "Somewhere I Belong", "Lying from You",
+      "Hit the Floor", "Easier to Run", "Faint", "Figure.09", "Breaking the Habit",
+      "From the Inside", "Nobody's Listening", "Session", "Numb"
+    ]);
+    const newSongs = [];
+    for (let i = 0; i < elx.length; i++) {
+      const songName = elx[i].textContent!;
+      if (!songs.has(songName)) {
+        newSongs.push(songName)
       }
-    }, songs[i])
-  }
+    }
+    return newSongs;
+  });
 
-  // await page.$eval(".songs-list-row", el => {
-  //   el.remove()
-  // })
+  console.log(foo.length)
 });
