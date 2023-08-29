@@ -19,39 +19,15 @@ import { test, expect } from '@playwright/test';
 
 test("get the damn title", async ({ page }) => {
   await page.goto("https://music.apple.com/us/album/meteora-20th-anniversary-edition/1668484895");
-  // await page.goto("https://playwright.dev/");
 
-  // this works
-  // const element = await page.waitForSelector('text="Disc 1"');
-  //
-  // await element.evaluate(el => {
-  //   el.remove();
-  // })
-
-  // this one don't
-  // await page.getByText("Disc 1").evaluate(el => {
-  //   el.remove();
-  // });
-
-
-  // for (let i = 0; i < songs.length; i++) {
-  //   await page.$eval(".songs-list-row", (el, songsName) => {
-  //     if (el.textContent?.includes(songsName)) {
-  //       el.remove();
-  //     }
-  //   }, songs[i])
-  // }
+  await page.waitForSelector(".songs-list-row__song-name")
 
   const foo = await page.locator(".songs-list-row__song-name").evaluateAll((elx) => {
-    const songs = new Set<string>([
-      "Foreword", "Don't Stay", "Somewhere I Belong", "Lying from You",
-      "Hit the Floor", "Easier to Run", "Faint", "Figure.09", "Breaking the Habit",
-      "From the Inside", "Nobody's Listening", "Session", "Numb"
-    ]);
     const newSongs = [];
     for (let i = 0; i < elx.length; i++) {
-      const songName = elx[i].textContent!;
-      if (!songs.has(songName)) {
+      const discName = elx[i].parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.firstChild;
+      if (discName?.textContent === "Disc 4" || discName?.textContent === "Disc 6") {
+        const songName = elx[i].textContent!;
         newSongs.push(songName)
       }
     }
