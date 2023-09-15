@@ -8,8 +8,12 @@ test("get the number of songs", async ({ page }) => {
   const songs = await page.locator(".songs-list-row__song-name").evaluateAll((elx) => {
     const newSongs = [];
     for (let i = 0; i < elx.length; i++) {
-      const discName = elx[i].parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.firstChild;
-      if (discName?.textContent === "Disc 4" || discName?.textContent === "Disc 6") {
+      let discName: ChildNode = elx[i];
+      for (let j = 0; j < 8; j++) {
+        discName = discName.parentElement!;
+      }
+      discName = discName.firstChild!;
+      if (discName.textContent === "Disc 4" || discName.textContent === "Disc 6") {
         const songName = elx[i].textContent!;
         newSongs.push(songName)
       }
