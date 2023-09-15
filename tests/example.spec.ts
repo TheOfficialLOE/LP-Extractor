@@ -1,11 +1,11 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-test("get the damn title", async ({ page }) => {
+test("get the number of songs", async ({ page }) => {
   await page.goto("https://music.apple.com/us/album/meteora-20th-anniversary-edition/1668484895");
 
   await page.waitForSelector(".songs-list-row__song-name")
 
-  const foo = await page.locator(".songs-list-row__song-name").evaluateAll((elx) => {
+  const songs = await page.locator(".songs-list-row__song-name").evaluateAll((elx) => {
     const newSongs = [];
     for (let i = 0; i < elx.length; i++) {
       const discName = elx[i].parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.firstChild;
@@ -17,5 +17,5 @@ test("get the damn title", async ({ page }) => {
     return newSongs;
   });
 
-  console.log(foo.length)
+  expect(songs.length).toBe(33);
 });
