@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch index.ts",
-    "test": "npx playwright test --ui"
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui"
   },
   "keywords": [],
   "author": "",
